@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { Platform } from 'react-native';
+import { Platform, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React from 'react';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
@@ -54,19 +54,38 @@ const PlacesNavigator = props => {
           name="NewPlace"
           component={NewPlaceScreen}
           options={(navData) => ({
-            title: 'New Place' 
+            title: 'New Place'
           })}
         />
         <Stack.Screen
           name="Map"
           component={MapScreen}
           options={(navData) => ({
-            title: 'Map' 
+            title: 'Map',
+            headerRight: () => (
+              <TouchableOpacity style={styles.headerButton} onPress={() => {
+                navData.navigation.navigate('NewPlace', {
+                  selectedLocation: navData.route.params.selectedLocation
+                });
+              }} >
+                <Text style={styles.headerButtonText}>Save</Text>
+              </TouchableOpacity>
+            )
           })}
         />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  headerButton: {
+    marginHorizontal: 20
+  },
+  headerButtonText: {
+    fontSize: 16,
+    color: Platform.OS === 'android' ? 'white' : Colors.primary
+  }
+});
 
 export default PlacesNavigator;

@@ -1,11 +1,10 @@
 import React from 'react';
-import { View, Image, StyleSheet, TouchableNativeFeedback, TouchableOpacity, Platform } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import ENV from '../env';
 
 
 const MapPreview = props => {
   let imagePreviewUrl;
-  let Touchable = Platform.OS === 'android' && Platform.Version >= 21 ? TouchableNativeFeedback : TouchableOpacity;
 
   if (props.location) {
     imagePreviewUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${
@@ -18,27 +17,26 @@ const MapPreview = props => {
   }
 
   return (
-    <Touchable
+    <TouchableOpacity
       onPress={props.onPress}
       style={{ ...styles.mapPreview, ...props.style }}
     >
-      {props.location ? (
-        <Image style={styles.mapImage} source={{ uri: imagePreviewUrl }} />
-      ) : (
-          props.children
-        )}
-    </Touchable>
+      {props.location ?
+        <Image style={styles.mapImage} source={{ uri: imagePreviewUrl }} /> :
+        props.children
+      }
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   mapPreview: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   mapImage: {
     width: '100%',
-    height: '100%'
+    height: '100%',
   }
 });
 

@@ -21,6 +21,7 @@ const ImgPicker = props => {
       return true
     }
   };
+  
   const takeImageHandler = async () => {
     const hasPermission = await verifyPermission();
     if (!hasPermission) {

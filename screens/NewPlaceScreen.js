@@ -35,7 +35,7 @@ const NewPlaceScreen = props => {
         <ImgPicker 
           onImageTake={imageTakenHandler}
         />
-        <LocationPicker navigation={props.navigation} />
+        <LocationPicker navigation={props.navigation} route={props.route} />
         <Button title='Save' color={Colors.primary} onPress={saveHandler} />
       </View>
     </ScrollView>
