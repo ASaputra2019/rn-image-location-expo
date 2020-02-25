@@ -20,3 +20,39 @@ export const init = () => {
   });
   return customPromise;
 };
+
+export const insertPlace = (title, imageUri, description, address, lat, lng) => {
+  const customPromise = new Promise((resolve, reject) => {
+    db.transaction((tx) => { 
+      tx.executeSql(
+        `INSERT INTO placesImage (title, imageUri, description, address, lat, lng) VALUES (?, ?, ?, ?, ?, ?);`,
+        [title, imageUri, description, address, lat, lng],
+        (_, result) => {
+          resolve(result);
+        },
+        (_, err) => {
+          reject(err);
+        }
+      );
+    });
+  });
+  return customPromise;
+};
+
+export const fetchPlaces = () => {
+  const customPromise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        `SELECT * FROM placesImage`,
+        [],
+        (_, result) => {
+          resolve(result);
+        },
+        (_, err) => {
+          reject(err);
+        }
+      );
+    });
+  });
+  return customPromise;
+};
