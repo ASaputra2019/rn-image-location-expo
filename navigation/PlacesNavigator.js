@@ -65,7 +65,7 @@ const PlacesNavigator = props => {
             headerRight: () => (
               <TouchableOpacity style={styles.headerButton} onPress={() => {
                 navData.navigation.navigate('NewPlace', {
-                  selectedLocation: navData.route.params.selectedLocation
+                  pickedLocation: navData.route.params.pickedLocation
                 });
               }} >
                 <Text style={styles.headerButtonText}>Save</Text>

@@ -14,8 +14,8 @@ const MapScreen = props => {
 
   const selectLocationHandler = event => {
     setSelectedLocation({
-      lat: event.nativeEvent.coordinate.latitude,
-      lng: event.nativeEvent.coordinate.longitude
+      latitude: event.nativeEvent.coordinate.latitude,
+      longitude: event.nativeEvent.coordinate.longitude
     });
   };
 
@@ -28,29 +28,24 @@ const MapScreen = props => {
       return;
     }
     props.navigation.setParams({
-      selectedLocation
+      pickedLocation: {
+        lat: selectedLocation.latitude,
+        lng: selectedLocation.longitude
+      }
     });
   }, [selectedLocation]);
-
-  let markerCoordinate;
-  if (selectedLocation) {
-    markerCoordinate = {
-      latitude: selectedLocation.lat,
-      longitude: selectedLocation.lng
-    };
-  }
 
   return (
     <MapView
       region={mapRegion}
-      onRegionChange={changeRegionHandler}
+      onRegionChangeComplete={changeRegionHandler}
       style={styles.mapView}
       onPress={selectLocationHandler}
     >
-      {markerCoordinate &&
+      {selectedLocation &&
         <Marker
           title='Picked Location'
-          coordinate={markerCoordinate}>
+          coordinate={selectedLocation}>
         </Marker>
       }
     </MapView>

@@ -10,7 +10,8 @@ import MapPreview from '../components/MapPreview';
 const LocationPicker = props => {
   const [isFetching, setIsFetching] = useState(false);
   const [loc, setLoc] = useState();
-  let mapPickedLocation = props.route.params ? props.route.params.selectedLocation : null ;
+  let mapPickedLocation = props.route.params ? props.route.params.pickedLocation : null ;
+
   useEffect(() => {
     if (mapPickedLocation) {
       setLoc(mapPickedLocation);
