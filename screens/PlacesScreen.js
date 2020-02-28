@@ -9,7 +9,7 @@ import * as placesActions from '../store/places-action';
 const PlacesScreen = props => {
   const placesArray = useSelector(state => state.places.places);
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     dispatch(placesActions.loadPlaces());
   }, [dispatch]);
@@ -18,19 +18,22 @@ const PlacesScreen = props => {
     <FlatList
       data={placesArray}
       keyExtractor={item => item.id}
-      renderItem={itemData =>
-        <PlaceItem
-          description={itemData.item.description}
-          image={itemData.item.imageUri}
-          title={itemData.item.title}
-          address=''
-          onSelect={() => {
-            props.navigation.navigate('PlaceDetail', {
-              placeTitle: itemData.item.title,
-              placeId: itemData.item.id
-            })
-          }}
-        />
+      renderItem={itemData => {
+        return (
+          <PlaceItem
+            title={itemData.item.title}
+            image={itemData.item.imageUri}
+            description={itemData.item.description}
+            address={itemData.item.address}
+            onSelect={() => {
+              props.navigation.navigate('PlaceDetail', {
+                placeTitle: itemData.item.title,
+                placeId: itemData.item.id
+              })
+            }}
+          />
+        )
+      }
       } />
   );
 };

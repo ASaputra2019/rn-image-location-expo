@@ -3,12 +3,18 @@ class Place {
     id,
     title,
     imageUri,
-    description
+    description,
+    address,
+    lat,
+    lng
   ) {
     this.id = id;
     this.title = title;
     this.imageUri = imageUri;
     this.description = description;
+    this.address = address;
+    this.lat = lat;
+    this.lng = lng;
   }
 };
 

@@ -56,3 +56,22 @@ export const fetchPlaces = () => {
   });
   return customPromise;
 };
+
+export const deletePlace = (id) => {
+  console.log(id)
+  const customPromise = new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        `DELETE FROM placesImage WHERE id = ${id}`,
+        [],
+        (_, result) => {
+          resolve(result);
+        },
+        (_, err) => {
+          reject(err);
+        }
+      );
+    });
+  });
+  return customPromise;
+}

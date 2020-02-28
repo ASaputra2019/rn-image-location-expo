@@ -12,11 +12,14 @@ const LocationPicker = props => {
   const [loc, setLoc] = useState();
   let mapPickedLocation = props.route.params ? props.route.params.pickedLocation : null ;
 
+  const { onLocationPicked } = props;
+
   useEffect(() => {
     if (mapPickedLocation) {
       setLoc(mapPickedLocation);
+      onLocationPicked(mapPickedLocation);
     }
-  }, [mapPickedLocation]);
+  }, [mapPickedLocation, onLocationPicked]);
 
   const verifyPermission = async () => {
     const result = await Permissions.askAsync(Permissions.LOCATION);
@@ -37,13 +40,16 @@ const LocationPicker = props => {
     if (!hasPermission) {
       return;
     }
-
     try {
       setIsFetching(true);
       let location = await Location.getCurrentPositionAsync({
         timeout: 5000
       });
       setLoc({
+        lat: location.coords.latitude,
+        lng: location.coords.longitude
+      });
+      props.onLocationPicked({
         lat: location.coords.latitude,
         lng: location.coords.longitude
       });
@@ -84,7 +90,7 @@ const styles = StyleSheet.create({
   mapPreview: {
     marginBottom: 10,
     width: '100%',
-    height: 250,
+    height: 200,
     borderWidth: 1,
     borderColor: '#ccc',
   },

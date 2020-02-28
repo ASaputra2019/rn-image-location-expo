@@ -10,6 +10,7 @@ import PlacesScreen from '../screens/PlacesScreen';
 import MapScreen from '../screens/MapScreen';
 import NewPlaceScreen from '../screens/NewPlaceScreen';
 import PlaceDetailScreen from '../screens/PlaceDetailScreen';
+import PictureScreen from '../screens/PictureScreen';
 
 
 
@@ -62,17 +63,27 @@ const PlacesNavigator = props => {
           component={MapScreen}
           options={(navData) => ({
             title: 'Map',
-            headerRight: () => (
+            headerRight: () => navData.route.params && navData.route.params.readOnly ? null : (
               <TouchableOpacity style={styles.headerButton} onPress={() => {
-                navData.navigation.navigate('NewPlace', {
-                  pickedLocation: navData.route.params.pickedLocation
-                });
+                if (navData.route.params && navData.route.params.pickedLocation) {
+                  navData.navigation.navigate('NewPlace', {
+                    pickedLocation: navData.route.params.pickedLocation
+                  });
+                }
               }} >
-                <Text style={styles.headerButtonText}>Save</Text>
+                <Text style={navData.route.params && navData.route.params.pickedLocation ? styles.headerButtonText : { color: '#ddd' }}>Save</Text>
               </TouchableOpacity>
             )
           })}
         />
+        <Stack.Screen
+          name="Picture"
+          component={PictureScreen}
+          options={(navData) => ({
+            title: navData.route.params.desc
+          })}
+        />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

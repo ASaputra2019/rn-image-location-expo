@@ -1,4 +1,4 @@
-import { ADD_PLACE, SET_PLACES } from './places-action';
+import { ADD_PLACE, SET_PLACES, DELETE_PLACE } from './places-action';
 import Place from '../models/place';
 
 
@@ -13,7 +13,10 @@ export default (state = initialState, action) => {
         action.placeData.id.toString(), 
         action.placeData.title, 
         action.placeData.image,
-        action.placeData.description
+        action.placeData.description,
+        action.placeData.address,
+        action.placeData.coords.lat,
+        action.placeData.coords.lng
       );
       return {
         places: state.places.concat(newPlace)
@@ -24,8 +27,15 @@ export default (state = initialState, action) => {
           p.id.toString(),
           p.title,
           p.imageUri,
-          p.description
+          p.description,
+          p.address,
+          p.lat,
+          p.lng
         ))
+      }
+    case DELETE_PLACE:
+      return {
+        places: state.places.filter(p => p.id != action.delId)
       }
     default:
       return state;
